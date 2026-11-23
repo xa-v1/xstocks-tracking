@@ -37,10 +37,5 @@ From the project folder (the RStudio project sets the working directory):
 | `22_weekend_tracker.R` | Main weekend regressions and scatter figure | `output/weekend_*.csv`, `weekend_regressions.txt`, `fig_weekend_scatter.png` |
 | `23_weekend_robust.R` | Same-sample check, promised robustness, forecast benchmark, leave-one-out | `output/weekend_robust.{csv,txt}` |
 
-`archive/` holds superseded scripts: `basis_minute.R` and `fig_basis_slide.R`
-use the old trade-price gap, which mixes the bid/ask spread with mispricing
-(see prereg_log.md, 2026-11-23). Their outputs are not included and should not be cited. `archive/Untitled_original.R`
-is the script that was split into scripts 01 to 03.
-
 R packages: data.table, ggplot2, scales, ragg, sandwich, lmtest, jsonlite,
 quantmod (03 only).

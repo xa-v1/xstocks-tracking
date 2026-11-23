@@ -212,3 +212,8 @@ weekend_robust.R -> 23_weekend_robust.R. Untitled.R was split into
 original kept in archive/). basis_minute.R and fig_basis_slide.R moved to archive/
 (superseded by the midpoint measure).
 Databento stock bars were obtained with free-trial credits (user, 2026-11-23).
+
+## 2026-11-23: archive/ removed
+
+The superseded scripts (basis_minute.R, fig_basis_slide.R, and the original
+Untitled.R) were deleted. They remain in the git history (first commit, 51e5cc4).
