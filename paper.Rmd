@@ -112,7 +112,7 @@ library(data.table); library(knitr)
 <!-- trade-price vs midpoint gaps by token, episode split -->
 ```{r tab-mid}
 # Table 2: output/mid_summary.csv
-# Figure: NEW midpoint-gap dot plot (to make; replaces archived slide)
+# Figure: NEW midpoint-gap dot plot (to make; replaces old trade-price slide)
 ```
 ## Is the gap tradable?
 <!-- share of minutes/days outside band by fee; outside episodes last 1-2 min -->
