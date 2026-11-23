@@ -216,4 +216,4 @@ Databento stock bars were obtained with free-trial credits (user, 2026-11-23).
 ## 2026-11-23: archive/ removed
 
 The superseded scripts (basis_minute.R, fig_basis_slide.R, and the original
-Untitled.R) were deleted. They remain in the git history (first commit, 51e5cc4).
+Untitled.R) were deleted. They remain in the git history (first commit, 5f023ac).
