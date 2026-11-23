@@ -1,0 +1,18 @@
+# Data: not redistributed (see README "Data sources")
+kraken_data/
+kraken_test/
+clean/
+btc_data/
+ohlcv1m_14tickers.csv
+# Derived minute-level data built from licensed Databento prices
+output/*.rds
+# Superseded outputs (old trade-price gap; do not cite)
+output/basis_summary.csv
+output/fig_basis_slide.png
+# Local / personal
+CLAUDE.md
+.claude/
+.Rhistory
+.RData
+.Rproj.user/
+.DS_Store

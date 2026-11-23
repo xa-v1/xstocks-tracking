@@ -1,0 +1,63 @@
+determinants.R run 2026-11-23 13:03:12 
+Token-days: 1225 | tokens: 14 | days: 251 
+
+== Descriptives (token-day) ==
+   abs_gap n_trades     rv half_spread open_share
+     <num>    <num>  <num>       <num>      <num>
+1:  0.0181     58.4 0.6846     -0.0285     0.0398
+2:  0.0491    120.0 1.9199      0.0125     0.1354
+3:  0.1379    405.0 4.1615      0.1477     0.3775
+
+Token-days kept per token:
+    symbol     N
+    <char> <int>
+ 1:   NVDA   206
+ 2:   TSLA   170
+ 3:    SPY   158
+ 4:  GOOGL   125
+ 5:   AAPL   111
+ 6:   CRCL   111
+ 7:   MSTR   105
+ 8:   HOOD    67
+ 9:   INTC    45
+10:    QQQ    31
+11:   META    30
+12:   COIN    28
+13:   AMZN    25
+14:   MRVL    13
+
+== (1) token FE | N = 1225 | days = 251 | R2 = 0.344 ==
+            Estimate Std. Error t value Pr(>|t|)
+log_trades   -0.0073     0.0031 -2.3441   0.0192
+rv            0.0375     0.0066  5.7234   0.0000
+half_spread   0.1134     0.0920  1.2318   0.2183
+open_share    0.0263     0.0171  1.5432   0.1231
+episode       0.0272     0.0321  0.8477   0.3968
+
+== (2) token FE, no half_spread | N = 1225 | days = 251 | R2 = 0.334 ==
+           Estimate Std. Error t value Pr(>|t|)
+log_trades  -0.0077     0.0031 -2.5104   0.0122
+rv           0.0382     0.0070  5.4981   0.0000
+open_share   0.0165     0.0164  1.0071   0.3141
+episode      0.0592     0.0121  4.8979   0.0000
+
+== (3) MAIN: token + date FE | N = 1225 | days = 251 | R2 = 0.518 ==
+            Estimate Std. Error t value Pr(>|t|)
+log_trades   -0.0038     0.0049 -0.7840   0.4333
+rv            0.0309     0.0079  3.9052   0.0001
+half_spread   0.1315     0.1395  0.9431   0.3459
+open_share    0.0193     0.0213  0.9068   0.3647
+
+== (4) as (3), 2-way cluster | N = 1225 | days = 251 | R2 = 0.518 ==
+            Estimate Std. Error t value Pr(>|t|)
+log_trades   -0.0038     0.0053 -0.7194   0.4721
+rv            0.0309     0.0116  2.6578   0.0080
+half_spread   0.1315     0.1432  0.9186   0.3585
+open_share    0.0193     0.0229  0.8438   0.3990
+
+== (5) as (3), log outcome | N = 1225 | days = 251 | R2 = 0.694 ==
+            Estimate Std. Error t value Pr(>|t|)
+log_trades   -0.0355     0.0426 -0.8340   0.4045
+rv            0.2503     0.0348  7.2022   0.0000
+half_spread   0.1788     0.6322  0.2829   0.7774
+open_share    0.4987     0.1601  3.1151   0.0019

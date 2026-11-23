@@ -1,0 +1,51 @@
+weekend_robust.R run 2026-11-23 13:03:17 
+
+== Specs ==
+                                   spec     N clusters slope    se p_slope0
+                                 <char> <int>    <int> <num> <num>    <num>
+ 1:                 Main 1: no controls   276       45 0.480 0.190    0.015
+ 2:                 Main 2: + BTC, SPYx   187       32 0.378 0.242    0.129
+ 3:          1) Main 1 on Main 2's rows   187       32 0.455 0.203    0.033
+ 4:              2a) K staleness 30 min   142       40 0.382 0.228    0.102
+ 5:    2a) K staleness 30 min, controls    58       19 0.068 0.466    0.886
+ 6:                2b) K = Monday 04:00   519       61 0.758 0.080    0.000
+ 7:    2c) drop windows before Nov 2025   276       45 0.480 0.190    0.015
+ 8:                 2d) r_tok regressor   197       44 0.389 0.212    0.074
+ 9:       2d) r_tok regressor, controls    91       20 0.067 0.297    0.825
+10:           3) buy/sell midpoint at K   135       37 0.322 0.234    0.178
+11: 3) buy/sell midpoint at K, controls    75       22 0.031 0.379    0.935
+    t_slope1    r2
+       <num> <num>
+ 1:    -2.74 0.165
+ 2:    -2.57 0.166
+ 3:    -2.68 0.159
+ 4:    -2.71 0.098
+ 5:    -2.00 0.119
+ 6:    -3.02 0.525
+ 7:    -2.74 0.165
+ 8:    -2.88 0.115
+ 9:    -3.14 0.055
+10:    -2.90 0.104
+11:    -2.56 0.089
+
+== Forecast benchmark ==
+Rows 276, windows 45
+MSE naive (open = Friday close): 3.553
+MSE token one-for-one:           3.629
+MSE token x slope (out-of-sample): 3.245
+naive - one-for-one: diff = -0.076, SE = 0.973, p = 0.938
+naive - out-of-sample: diff = 0.308, SE = 0.578, p = 0.594
+Same sign as stock gap: 0.652
+
+
+== Leave-one-window-out (slope of Main 1) ==
+range 0.428 to 0.684, median 0.480
+Most influential (lowest and highest slope when dropped):
+      dropped n_rows slope
+       <char>  <int> <num>
+1: 2026-01-30      8 0.428
+2: 2026-06-12      7 0.447
+3: 2026-03-13      8 0.457
+4: 2026-03-27      8 0.501
+5: 2026-03-06      8 0.523
+6: 2026-07-02      8 0.684
