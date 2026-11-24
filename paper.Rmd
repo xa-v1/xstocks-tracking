@@ -19,8 +19,8 @@ library(data.table); library(knitr)
 - Question: weekday tracking/arbitrage + off-hours price discovery
 - Data: 14 xStocks, every Kraken trade, Databento 1-min bars, Aug 2025 to Oct 2026
 - Finding 1: midpoint gap tiny; trade-price gaps mostly spread
-- Finding 2: almost nothing outside a no-arb band at realistic fees; half-life ~12 min
-- Finding 3: only volatility predicts gaps
+- Finding 2: almost no minutes where the gap clears estimated trading costs at realistic fees; runs are almost always 1 minute; half-life ~12 min
+- Finding 3: only volatility robustly predicts gaps (trade count n.s. with date FE; post-hoc volume/Amihud signs run opposite to H2)
 - Finding 4: weekend token price weakly related to Monday open; doesn't beat naive forecast
 -->
 
@@ -114,17 +114,34 @@ library(data.table); library(knitr)
 # Table 2: output/mid_summary.csv
 # Figure: NEW midpoint-gap dot plot (to make; replaces old trade-price slide)
 ```
-## Is the gap tradable?
-<!-- share of minutes/days outside band by fee; outside episodes last 1-2 min -->
+## Does the gap clear estimated trading costs?
+<!--
+- Say "cleared estimated trading costs", never "profitable" (no trade size, slippage, latency, stock-leg costs)
+- share of minutes/days outside band by fee
+- DIRECTION (post-hoc): mostly sell-token-above-stock-high at fee 0.10 (band_direction.csv)
+- DURATION (post-hoc): runs of consecutive minutes; ~79% last 1 minute at fee 0.10 (band_runs.csv).
+  Do NOT cite med_out_minutes_when_any as a duration: it is flagged minutes per day
+- Same-minute trade vs midpoint comparison (same_minute.csv)
+- Time of day (fig_heat_gap / fig_heat_band); ETF vs crypto-linked descriptive (group_compare.csv; 2 vs 4 tokens, no test)
+-->
 ```{r tab-band}
 # Table 3: output/band.csv (episode == FALSE, fee 0.10 and 0.25)
+# Table 3b: output/band_runs.csv (direction == "any", pooled)
+# Figures: output/fig_heat_gap.png, output/fig_heat_band.png
 ```
 ## Persistence
 ```{r tab-pers}
 # Table 4: output/persistence.csv
 ```
 ## What predicts the gap (H2)
-<!-- volatility robust; liquidity vanishes with date FE; spread/episode collinear; noisy half-spread -->
+<!--
+- volatility robust; log trade COUNT not significant with date FE (say exactly that, not "volume doesn't matter")
+- spread/episode collinear; noisy half-spread
+- Post-hoc liquidity table (determinants_liquidity.csv): dollar volume +, Amihud -, trade size +,
+  all p 0.02-0.04, i.e. MORE trading goes with BIGGER gaps. Opposite to H2; plausibly reverse
+  causality (gaps attract arbitrage trades). Post-hoc, several specs: do not oversell.
+- Depth not testable: no historical Kraken order book
+-->
 ```{r tab-det}
 # Table 5: output/determinants_table.csv
 ```

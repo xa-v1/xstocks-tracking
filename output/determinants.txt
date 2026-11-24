@@ -1,12 +1,18 @@
-determinants.R run 2026-11-23 13:03:12 
+determinants.R run 2026-11-24 10:47:15 
 Token-days: 1225 | tokens: 14 | days: 251 
 
 == Descriptives (token-day) ==
-   abs_gap n_trades     rv half_spread open_share
-     <num>    <num>  <num>       <num>      <num>
-1:  0.0181     58.4 0.6846     -0.0285     0.0398
-2:  0.0491    120.0 1.9199      0.0125     0.1354
-3:  0.1379    405.0 4.1615      0.1477     0.3775
+   abs_gap n_trades     rv half_spread open_share dollar_vol med_trade_usd
+     <num>    <num>  <num>       <num>      <num>      <num>         <num>
+1:  0.0181     58.4 0.6846     -0.0285     0.0398   17034.39       29.7796
+2:  0.0491    120.0 1.9199      0.0125     0.1354   86846.32      104.1754
+3:  0.1379    405.0 4.1615      0.1477     0.3775  389715.40      993.7299
+    amihud
+     <num>
+1:  1.6335
+2: 13.2888
+3: 79.9222
+Token-days with zero return (dropped in spec 7): 0 
 
 Token-days kept per token:
     symbol     N
@@ -61,3 +67,19 @@ log_trades   -0.0355     0.0426 -0.8340   0.4045
 rv            0.2503     0.0348  7.2022   0.0000
 half_spread   0.1788     0.6322  0.2829   0.7774
 open_share    0.4987     0.1601  3.1151   0.0019
+
+== (6) POST-HOC: log dollar volume | N = 1225 | days = 251 | R2 = 0.52 ==
+            Estimate Std. Error t value Pr(>|t|)
+log_dvol      0.0055     0.0026  2.1009   0.0359
+rv            0.0276     0.0080  3.4639   0.0006
+half_spread   0.1395     0.1381  1.0099   0.3128
+open_share    0.0224     0.0217  1.0314   0.3026
+
+== (7) POST-HOC: + Amihud, trade size | N = 1225 | days = 251 | R2 = 0.525 ==
+              Estimate Std. Error t value Pr(>|t|)
+log_trades     -0.0071     0.0053 -1.3398   0.1806
+rv              0.0304     0.0076  3.9966   0.0001
+half_spread     0.1354     0.1375  0.9853   0.3247
+open_share      0.0190     0.0213  0.8905   0.3734
+log(amihud)    -0.0042     0.0018 -2.2908   0.0222
+log_trade_usd   0.0056     0.0027  2.0754   0.0382

@@ -217,3 +217,57 @@ Databento stock bars were obtained with free-trial credits (user, 2026-11-23).
 
 The superseded scripts (basis_minute.R, fig_basis_slide.R, and the original
 Untitled.R) were deleted. They remain in the git history (first commit, 5f023ac).
+
+## 2026-11-24: Follow-ups to the band, duration and liquidity results (POST-HOC)
+
+All of these were chosen AFTER the results of `10_basis_mid.R` and
+`11_determinants.R` had been seen (prompted by an outside review). They are
+reported as post-hoc additions; none replaces a pre-registered result.
+New script: `12_band_followups.R`. `10_basis_mid.R` only gains two saved files
+(minute-level band flags and last-trade gaps); its existing outputs are unchanged.
+
+1. **Same-minute comparison.** The trade-price gap and the midpoint gap are
+   compared on exactly the same minutes: minutes where the midpoint gap exists.
+   Trade-price gap = last token trade (either side) in that minute vs the stock
+   bar close. The full-sample numbers in `mid_summary.csv` stay as they are.
+   Caveat: midpoint minutes are busier minutes (both sides within 5 minutes).
+2. **Direction split.** From the conservative band test (`out_range`): buy-token
+   direction = a buy trade below the stock's minute LOW by more than c (buy token,
+   sell stock); sell-token direction = a sell trade above the minute HIGH by more
+   than c (sell token, buy stock). Shares use the same minute denominator as
+   `band.csv`. A minute can count in both. No quotes exist for either leg, so the
+   token's own buy/sell trades stand in for its ask/bid, and the stock's minute
+   low/high stand in for its bid/ask.
+3. **Duration in consecutive minutes.** A run = a maximal sequence of flagged
+   minutes with consecutive minute stamps, same token and day. A minute with no
+   token trade breaks the run (decided by the user); so does a traded minute that
+   is not flagged. Reported for any direction (main) and each direction alone:
+   number of runs, median, mean, 90th percentile and max length, share of runs
+   lasting 1 minute. This replaces `med_out_minutes_when_any` in `band.csv`,
+   which counts flagged minutes per day and is NOT a duration.
+4. **Time-of-day heat maps.** Episode excluded. 15-minute buckets from 09:30
+   (26 buckets) by token. (a) median |midpoint gap|; (b) share of band minutes
+   outside the band at fee 0.10% (`out_range`). Cells with fewer than 30 minutes
+   are left blank. Descriptive only. Expected: the 09:30-09:45 bucket is highest
+   because the open is the noisiest stock minute.
+5. **ETFs vs crypto-linked vs other single stocks.** ETF = SPY, QQQ;
+   crypto-linked = COIN, MSTR, CRCL, HOOD; other = the remaining 8. Episode
+   excluded. Per-token median |midpoint gap|, share of minutes outside the band
+   (fees 0.10, 0.25), median run length at 0.10, AR(1) half-life from
+   `persistence.csv`. Group summary = median across its tokens. No test: 2 vs 4
+   tokens cannot support one.
+6. **Wording.** "Profitable" is replaced by "cleared estimated trading costs":
+   the band ignores trade size, slippage beyond the observed spread, latency and
+   the cost of closing the stock leg. "Volume doesn't matter" is narrowed to:
+   log token trade count is not significant once date fixed effects are included.
+7. **Liquidity, measured more directly (separate table, not the main table).**
+   Order-book depth is NOT available (Kraken's public Depth endpoint is a live
+   snapshot with no history). Added per token-day, regular session:
+   dollar volume = sum(price * size); median trade size in USD;
+   Amihud illiquidity = |100 * log(last / first token trade price)| / (dollar
+   volume in $ millions). Amihud uses trade prices, so it contains bid-ask bounce.
+   Specs (token + date FE, SE clustered by date, as main spec (3)):
+   (6) log dollar volume in place of log trade count;
+   (7) spec (3) plus log Amihud and log median trade size (days with a zero
+       return dropped, N reported).
+   Written to `output/determinants_liquidity.csv`; the main table is unchanged.

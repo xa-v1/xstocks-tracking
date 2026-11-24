@@ -1,0 +1,395 @@
+12_band_followups.R run 2026-11-24 10:47:29 (all POST-HOC, prereg_log.md 2026-11-24)
+
+== 1) Same minutes: trade-price vs midpoint gap ==
+    symbol episode minutes med_abs_trade med_abs_mid p95_abs_trade p95_abs_mid
+    <char>  <lgcl>   <int>         <num>       <num>         <num>       <num>
+ 1:   AAPL   FALSE    4213        0.0384      0.0226         0.161       0.134
+ 2:    SPY   FALSE    4298        0.0362      0.0232         0.179       0.171
+ 3:    QQQ   FALSE    1048        0.0363      0.0257         0.179       0.151
+ 4:  GOOGL   FALSE    4300        0.0476      0.0301         0.223       0.173
+ 5:   NVDA   FALSE    8968        0.0426      0.0319         0.204       0.163
+ 6:   TSLA   FALSE    7801        0.0518      0.0390         0.258       0.209
+ 7:   AMZN   FALSE     905        0.0502      0.0437         0.920       0.446
+ 8:   META   FALSE    1194        0.0623      0.0599         0.325       0.298
+ 9:   MSTR   FALSE    5061        0.0836      0.0660         0.429       0.383
+10:   COIN   FALSE    1490        0.0856      0.0680         0.498       0.384
+11:   INTC   FALSE    2165        0.0846      0.0701         0.571       0.463
+12:   HOOD   FALSE    2233        0.0908      0.0708         0.430       0.369
+13:   CRCL   FALSE    5156        0.1104      0.1030         0.497       0.482
+14:   MRVL   FALSE     677        0.1297      0.1373         1.313       0.958
+15:   AAPL    TRUE     630        0.4546      0.0340         0.583       0.282
+16:   AMZN    TRUE      99        0.4576      0.0340         0.584       0.511
+17:  GOOGL    TRUE     718        0.4543      0.0524         0.752       0.549
+18:   MRVL    TRUE       3        0.4236      0.0667         0.431       0.416
+19:    SPY    TRUE     955        0.4653      0.0760         0.573       0.403
+20:   TSLA    TRUE     997        0.3781      0.0798         0.607       0.473
+21:   HOOD    TRUE      96        0.2804      0.0841         0.648       0.592
+22:   NVDA    TRUE    2378        0.3517      0.0970         0.612       0.394
+23:   INTC    TRUE     125        0.4492      0.0970         0.665       0.556
+24:   COIN    TRUE      46        0.4938      0.1179         0.860       0.560
+25:    QQQ    TRUE      93        0.4629      0.1221         0.963       0.581
+26:   META    TRUE      33        0.3998      0.1661         0.666       0.653
+27:   MSTR    TRUE      76        0.5195      0.3622         1.843       1.483
+28:   CRCL    TRUE     112        0.4752      0.3651         0.828       0.747
+    symbol episode minutes med_abs_trade med_abs_mid p95_abs_trade p95_abs_mid
+    <char>  <lgcl>   <int>         <num>       <num>         <num>       <num>
+    share_trade_gt_0.5 share_mid_gt_0.5
+                 <num>            <num>
+ 1:            0.00332          0.00309
+ 2:            0.00326          0.00279
+ 3:            0.00859          0.01050
+ 4:            0.00628          0.00419
+ 5:            0.00357          0.00212
+ 6:            0.00705          0.00551
+ 7:            0.06630          0.04530
+ 8:            0.02345          0.02513
+ 9:            0.03774          0.03201
+10:            0.04966          0.03758
+11:            0.06051          0.04758
+12:            0.03493          0.02821
+13:            0.04946          0.04364
+14:            0.11817          0.16544
+15:            0.19206          0.02381
+16:            0.24242          0.06061
+17:            0.23120          0.06407
+18:            0.00000          0.00000
+19:            0.10785          0.02827
+20:            0.18756          0.03711
+21:            0.28125          0.09375
+22:            0.16737          0.02397
+23:            0.36000          0.06400
+24:            0.47826          0.06522
+25:            0.19355          0.07527
+26:            0.27273          0.15152
+27:            0.55263          0.40789
+28:            0.42857          0.36607
+    share_trade_gt_0.5 share_mid_gt_0.5
+                 <num>            <num>
+
+== 2) Direction of band crossings ==
+      fee symbol episode minutes share_out share_buy_token share_sell_token
+    <num> <char>  <lgcl>   <int>     <num>           <num>            <num>
+ 1:  0.00   COIN   FALSE    4449  0.181839        3.84e-02         1.44e-01
+ 2:  0.00    SPY   FALSE   12949  0.174531        6.07e-02         1.14e-01
+ 3:  0.00   CRCL   FALSE   11196  0.160236        4.39e-02         1.16e-01
+ 4:  0.00   META   FALSE    4394  0.159763        1.02e-01         5.83e-02
+ 5:  0.00    QQQ   FALSE    6125  0.158204        8.23e-02         7.59e-02
+ 6:  0.00   MSTR   FALSE   11654  0.146988        5.15e-02         9.63e-02
+ 7:  0.00   HOOD   FALSE    6878  0.107299        3.94e-02         6.79e-02
+ 8:  0.00   MRVL   FALSE    2899  0.105209        3.90e-02         6.69e-02
+ 9:  0.00   AMZN   FALSE    4708  0.097069        6.35e-02         3.42e-02
+10:  0.00  GOOGL   FALSE   11458  0.076279        4.74e-02         2.90e-02
+11:  0.00   AAPL   FALSE   11480  0.073519        5.19e-02         2.16e-02
+12:  0.00   INTC   FALSE    6808  0.068008        3.54e-02         3.28e-02
+13:  0.00   TSLA   FALSE   16150  0.066192        3.99e-02         2.64e-02
+14:  0.00   NVDA   FALSE   18278  0.054492        3.86e-02         1.60e-02
+15:  0.00   CRCL    TRUE     656  0.240854        7.77e-02         1.63e-01
+16:  0.00   MSTR    TRUE     557  0.186715        1.02e-01         8.44e-02
+17:  0.00   META    TRUE     325  0.080000        9.23e-03         7.08e-02
+18:  0.00   HOOD    TRUE     705  0.078014        6.95e-02         8.51e-03
+19:  0.00   TSLA    TRUE    2530  0.054150        4.51e-02         9.49e-03
+20:  0.00   COIN    TRUE     510  0.029412        1.76e-02         1.18e-02
+21:  0.00   MRVL    TRUE     140  0.028571        2.86e-02         0.00e+00
+22:  0.00  GOOGL    TRUE    2216  0.028430        2.03e-02         8.12e-03
+23:  0.00   INTC    TRUE     743  0.026918        2.15e-02         5.38e-03
+24:  0.00    QQQ    TRUE     874  0.026316        9.15e-03         1.72e-02
+25:  0.00    SPY    TRUE    2735  0.017916        9.51e-03         8.41e-03
+26:  0.00   AAPL    TRUE    2119  0.014630        1.13e-02         3.30e-03
+27:  0.00   NVDA    TRUE    4116  0.013362        7.53e-03         5.83e-03
+28:  0.00   AMZN    TRUE     725  0.009655        6.90e-03         2.76e-03
+29:  0.10   META   FALSE    4394  0.034365        1.02e-02         2.41e-02
+30:  0.10   MSTR   FALSE   11654  0.028745        1.72e-03         2.70e-02
+31:  0.10   MRVL   FALSE    2899  0.024836        5.86e-03         1.90e-02
+32:  0.10   COIN   FALSE    4449  0.022927        2.25e-03         2.07e-02
+33:  0.10   CRCL   FALSE   11196  0.019650        5.27e-03         1.44e-02
+34:  0.10   INTC   FALSE    6808  0.011457        1.62e-03         9.84e-03
+35:  0.10   AMZN   FALSE    4708  0.007859        1.49e-03         6.37e-03
+36:  0.10    SPY   FALSE   12949  0.007491        6.95e-04         6.80e-03
+37:  0.10    QQQ   FALSE    6125  0.007020        9.80e-04         6.04e-03
+38:  0.10   TSLA   FALSE   16150  0.004644        6.19e-04         4.02e-03
+39:  0.10   HOOD   FALSE    6878  0.004362        1.02e-03         3.34e-03
+40:  0.10   AAPL   FALSE   11480  0.003833        6.10e-04         3.22e-03
+41:  0.10  GOOGL   FALSE   11458  0.001833        8.73e-05         1.75e-03
+42:  0.10   NVDA   FALSE   18278  0.001422        8.21e-04         6.02e-04
+43:  0.10   CRCL    TRUE     656  0.143293        5.34e-02         8.99e-02
+44:  0.10   MSTR    TRUE     557  0.082585        1.80e-02         6.46e-02
+45:  0.10   HOOD    TRUE     705  0.028369        2.41e-02         4.26e-03
+46:  0.10   META    TRUE     325  0.018462        6.15e-03         1.23e-02
+47:  0.10   TSLA    TRUE    2530  0.007510        5.93e-03         1.58e-03
+48:  0.10    QQQ    TRUE     874  0.006865        2.29e-03         4.58e-03
+49:  0.10   NVDA    TRUE    4116  0.004373        2.19e-03         2.19e-03
+50:  0.10   INTC    TRUE     743  0.004038        1.35e-03         2.69e-03
+51:  0.10   COIN    TRUE     510  0.003922        1.96e-03         1.96e-03
+52:  0.10    SPY    TRUE    2735  0.003656        0.00e+00         3.66e-03
+53:  0.10  GOOGL    TRUE    2216  0.003610        3.16e-03         4.51e-04
+54:  0.10   AAPL    TRUE    2119  0.001416        0.00e+00         1.42e-03
+55:  0.10   AMZN    TRUE     725  0.000000        0.00e+00         0.00e+00
+56:  0.10   MRVL    TRUE     140  0.000000        0.00e+00         0.00e+00
+57:  0.25   META   FALSE    4394  0.017296        4.78e-03         1.25e-02
+58:  0.25   MSTR   FALSE   11654  0.017076        3.43e-04         1.67e-02
+59:  0.25   COIN   FALSE    4449  0.015509        1.12e-03         1.44e-02
+60:  0.25   MRVL   FALSE    2899  0.013453        3.45e-03         1.00e-02
+61:  0.25   INTC   FALSE    6808  0.006022        8.81e-04         5.14e-03
+62:  0.25   CRCL   FALSE   11196  0.004555        1.34e-03         3.22e-03
+63:  0.25   AMZN   FALSE    4708  0.003611        2.12e-04         3.40e-03
+64:  0.25   AAPL   FALSE   11480  0.002526        0.00e+00         2.53e-03
+65:  0.25    QQQ   FALSE    6125  0.001959        0.00e+00         1.96e-03
+66:  0.25   HOOD   FALSE    6878  0.001454        1.45e-04         1.31e-03
+67:  0.25    SPY   FALSE   12949  0.001158        0.00e+00         1.16e-03
+68:  0.25   TSLA   FALSE   16150  0.001115        6.19e-05         1.05e-03
+69:  0.25  GOOGL   FALSE   11458  0.000611        0.00e+00         6.11e-04
+70:  0.25   NVDA   FALSE   18278  0.000219        1.64e-04         5.47e-05
+71:  0.25   MSTR    TRUE     557  0.044883        1.80e-03         4.31e-02
+72:  0.25   CRCL    TRUE     656  0.010671        1.52e-03         9.15e-03
+73:  0.25   META    TRUE     325  0.009231        0.00e+00         9.23e-03
+74:  0.25   COIN    TRUE     510  0.001961        0.00e+00         1.96e-03
+75:  0.25   HOOD    TRUE     705  0.001418        1.42e-03         0.00e+00
+76:  0.25   INTC    TRUE     743  0.001346        0.00e+00         1.35e-03
+77:  0.25   NVDA    TRUE    4116  0.001215        4.86e-04         7.29e-04
+78:  0.25    QQQ    TRUE     874  0.001144        0.00e+00         1.14e-03
+79:  0.25    SPY    TRUE    2735  0.001097        0.00e+00         1.10e-03
+80:  0.25   AAPL    TRUE    2119  0.000472        0.00e+00         4.72e-04
+81:  0.25  GOOGL    TRUE    2216  0.000451        0.00e+00         4.51e-04
+82:  0.25   AMZN    TRUE     725  0.000000        0.00e+00         0.00e+00
+83:  0.25   MRVL    TRUE     140  0.000000        0.00e+00         0.00e+00
+84:  0.25   TSLA    TRUE    2530  0.000000        0.00e+00         0.00e+00
+      fee symbol episode minutes share_out share_buy_token share_sell_token
+    <num> <char>  <lgcl>   <int>     <num>           <num>            <num>
+    n_buy_token n_sell_token
+          <int>        <int>
+ 1:         171          641
+ 2:         786         1477
+ 3:         492         1304
+ 4:         449          256
+ 5:         504          465
+ 6:         600         1122
+ 7:         271          467
+ 8:         113          194
+ 9:         299          161
+10:         543          332
+11:         596          248
+12:         241          223
+13:         645          426
+14:         706          293
+15:          51          107
+16:          57           47
+17:           3           23
+18:          49            6
+19:         114           24
+20:           9            6
+21:           4            0
+22:          45           18
+23:          16            4
+24:           8           15
+25:          26           23
+26:          24            7
+27:          31           24
+28:           5            2
+29:          45          106
+30:          20          315
+31:          17           55
+32:          10           92
+33:          59          161
+34:          11           67
+35:           7           30
+36:           9           88
+37:           6           37
+38:          10           65
+39:           7           23
+40:           7           37
+41:           1           20
+42:          15           11
+43:          35           59
+44:          10           36
+45:          17            3
+46:           2            4
+47:          15            4
+48:           2            4
+49:           9            9
+50:           1            2
+51:           1            1
+52:           0           10
+53:           7            1
+54:           0            3
+55:           0            0
+56:           0            0
+57:          21           55
+58:           4          195
+59:           5           64
+60:          10           29
+61:           6           35
+62:          15           36
+63:           1           16
+64:           0           29
+65:           0           12
+66:           1            9
+67:           0           15
+68:           1           17
+69:           0            7
+70:           3            1
+71:           1           24
+72:           1            6
+73:           0            3
+74:           0            1
+75:           1            0
+76:           0            1
+77:           2            3
+78:           0            1
+79:           0            3
+80:           0            1
+81:           0            1
+82:           0            0
+83:           0            0
+84:           0            0
+    n_buy_token n_sell_token
+          <int>        <int>
+
+== 3) Run lengths (consecutive minutes), pooled ==
+     direction   fee       symbol episode  runs med_len mean_len p90_len
+        <char> <num>       <char>  <lgcl> <int>   <num>    <num>   <num>
+ 1:        any  0.00 ALL (pooled)   FALSE 11634       1     1.20       2
+ 2:        any  0.00 ALL (pooled)    TRUE   683       1     1.09       1
+ 3:        any  0.10 ALL (pooled)   FALSE   967       1     1.38       2
+ 4:        any  0.10 ALL (pooled)    TRUE   217       1     1.08       1
+ 5:        any  0.25 ALL (pooled)   FALSE   379       1     1.55       2
+ 6:        any  0.25 ALL (pooled)    TRUE    42       1     1.17       2
+ 7:  buy_token  0.00 ALL (pooled)   FALSE  5647       1     1.14       2
+ 8:  buy_token  0.00 ALL (pooled)    TRUE   409       1     1.08       1
+ 9:  buy_token  0.10 ALL (pooled)   FALSE   179       1     1.25       2
+10:  buy_token  0.10 ALL (pooled)    TRUE    97       1     1.02       1
+11:  buy_token  0.25 ALL (pooled)   FALSE    48       1     1.40       2
+12:  buy_token  0.25 ALL (pooled)    TRUE     5       1     1.00       1
+13: sell_token  0.00 ALL (pooled)   FALSE  6120       1     1.24       2
+14: sell_token  0.00 ALL (pooled)    TRUE   276       1     1.11       1
+15: sell_token  0.10 ALL (pooled)   FALSE   789       1     1.40       2
+16: sell_token  0.10 ALL (pooled)    TRUE   120       1     1.13       2
+17: sell_token  0.25 ALL (pooled)   FALSE   331       1     1.57       2
+18: sell_token  0.25 ALL (pooled)    TRUE    37       1     1.19       2
+    max_len share_len1
+      <int>      <num>
+ 1:      31      0.869
+ 2:       4      0.924
+ 3:      27      0.791
+ 4:       3      0.926
+ 5:      26      0.728
+ 6:       3      0.857
+ 7:      16      0.898
+ 8:       4      0.939
+ 9:      16      0.866
+10:       2      0.979
+11:      15      0.875
+12:       1      1.000
+13:      31      0.855
+14:       3      0.906
+15:      27      0.776
+16:       3      0.883
+17:      26      0.707
+18:       3      0.838
+
+== 3) Run lengths, any direction, fee 0.1 , by token ==
+    direction   fee symbol episode  runs med_len mean_len p90_len max_len
+       <char> <num> <char>  <lgcl> <int>   <num>    <num>   <num>   <int>
+ 1:       any   0.1   AAPL   FALSE    33     1.0     1.33     2.0       4
+ 2:       any   0.1   AMZN   FALSE    33     1.0     1.12     1.0       3
+ 3:       any   0.1   COIN   FALSE    73     1.0     1.40     2.0       6
+ 4:       any   0.1   CRCL   FALSE   182     1.0     1.21     2.0      12
+ 5:       any   0.1  GOOGL   FALSE    17     1.0     1.24     2.0       3
+ 6:       any   0.1   HOOD   FALSE    25     1.0     1.20     2.0       2
+ 7:       any   0.1   INTC   FALSE    71     1.0     1.10     1.0       2
+ 8:       any   0.1   META   FALSE   102     1.0     1.48     2.0      16
+ 9:       any   0.1   MRVL   FALSE    59     1.0     1.22     2.0       4
+10:       any   0.1   MSTR   FALSE   193     1.0     1.74     2.8      27
+11:       any   0.1   NVDA   FALSE    25     1.0     1.04     1.0       2
+12:       any   0.1    QQQ   FALSE    39     1.0     1.10     1.0       3
+13:       any   0.1    SPY   FALSE    56     1.0     1.73     3.0       7
+14:       any   0.1   TSLA   FALSE    59     1.0     1.27     2.0       4
+15:       any   0.1   AAPL    TRUE     3     1.0     1.00     1.0       1
+16:       any   0.1   COIN    TRUE     2     1.0     1.00     1.0       1
+17:       any   0.1   CRCL    TRUE    91     1.0     1.03     1.0       2
+18:       any   0.1  GOOGL    TRUE     8     1.0     1.00     1.0       1
+19:       any   0.1   HOOD    TRUE    19     1.0     1.05     1.0       2
+20:       any   0.1   INTC    TRUE     2     1.5     1.50     1.9       2
+21:       any   0.1   META    TRUE     6     1.0     1.00     1.0       1
+22:       any   0.1   MSTR    TRUE    37     1.0     1.24     2.0       3
+23:       any   0.1   NVDA    TRUE    15     1.0     1.20     2.0       2
+24:       any   0.1    QQQ    TRUE     6     1.0     1.00     1.0       1
+25:       any   0.1    SPY    TRUE     9     1.0     1.11     1.2       2
+26:       any   0.1   TSLA    TRUE    19     1.0     1.00     1.0       1
+    direction   fee symbol episode  runs med_len mean_len p90_len max_len
+       <char> <num> <char>  <lgcl> <int>   <num>    <num>   <num>   <int>
+    share_len1
+         <num>
+ 1:      0.788
+ 2:      0.909
+ 3:      0.767
+ 4:      0.874
+ 5:      0.824
+ 6:      0.800
+ 7:      0.901
+ 8:      0.696
+ 9:      0.831
+10:      0.705
+11:      0.960
+12:      0.923
+13:      0.607
+14:      0.780
+15:      1.000
+16:      1.000
+17:      0.967
+18:      1.000
+19:      0.947
+20:      0.500
+21:      1.000
+22:      0.811
+23:      0.800
+24:      1.000
+25:      0.889
+26:      1.000
+    share_len1
+         <num>
+
+== 5) Per token (episode excluded) ==
+    symbol med_abs_mid share_out_fee0.1 share_out_fee0.25 med_run_len
+    <char>       <num>            <num>             <num>       <num>
+ 1:   MSTR      0.0660          0.02875          0.017076           1
+ 2:   COIN      0.0680          0.02293          0.015509           1
+ 3:   HOOD      0.0708          0.00436          0.001454           1
+ 4:   CRCL      0.1030          0.01965          0.004555           1
+ 5:    SPY      0.0232          0.00749          0.001158           1
+ 6:    QQQ      0.0257          0.00702          0.001959           1
+ 7:   AAPL      0.0226          0.00383          0.002526           1
+ 8:  GOOGL      0.0301          0.00183          0.000611           1
+ 9:   NVDA      0.0319          0.00142          0.000219           1
+10:   TSLA      0.0390          0.00464          0.001115           1
+11:   AMZN      0.0437          0.00786          0.003611           1
+12:   META      0.0599          0.03437          0.017296           1
+13:   INTC      0.0701          0.01146          0.006022           1
+14:   MRVL      0.1373          0.02484          0.013453           1
+    half_life_min              group
+            <num>             <char>
+ 1:         28.31      Crypto-linked
+ 2:            NA      Crypto-linked
+ 3:          2.67      Crypto-linked
+ 4:          8.35      Crypto-linked
+ 5:         27.35                ETF
+ 6:         46.21                ETF
+ 7:         17.39 Other single stock
+ 8:          8.91 Other single stock
+ 9:          5.32 Other single stock
+10:          6.04 Other single stock
+11:         21.28 Other single stock
+12:         10.24 Other single stock
+13:         13.24 Other single stock
+14:          9.88 Other single stock
+
+== 5) Group medians ==
+                group                                   tokens med_abs_mid
+               <char>                                   <char>       <num>
+1:      Crypto-linked                      MSTR COIN HOOD CRCL      0.0694
+2:                ETF                                  SPY QQQ      0.0245
+3: Other single stock AAPL GOOGL NVDA TSLA AMZN META INTC MRVL      0.0413
+   share_out_fee0.1 share_out_fee0.25 med_run_len half_life_min
+              <num>             <num>       <num>         <num>
+1:          0.02129           0.01003           1          8.35
+2:          0.00726           0.00156           1         36.78
+3:          0.00625           0.00307           1         10.06

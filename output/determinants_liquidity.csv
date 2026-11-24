@@ -1,0 +1,10 @@
+term,(6) POST-HOC: log dollar volume,"(7) POST-HOC: + Amihud, trade size"
+N,1225,1225
+days,251,251
+half_spread,0.1395 (0.1381),0.1354 (0.1375)
+log(amihud),"",-0.0042** (0.0018)
+log_dvol,0.0055** (0.0026),""
+log_trade_usd,"",0.0056** (0.0027)
+log_trades,"",-0.0071 (0.0053)
+open_share,0.0224 (0.0217),0.0190 (0.0213)
+rv,0.0276*** (0.0080),0.0304*** (0.0076)

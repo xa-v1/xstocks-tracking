@@ -30,8 +30,9 @@ From the project folder (the RStudio project sets the working directory):
 | `02_clean_kraken.R` | Combine token trades, drop page-boundary duplicates | `clean/kraken_trades.rds` |
 | `03_explore_coverage.R` | Exploratory design checks (needs internet for the Yahoo comparison) | console only |
 | `04_data_quality.R` | Data appendix tables | `output/dq_*.csv`, `output/data_quality.txt` |
-| `10_basis_mid.R` | Intraday gap: side-specific vs midpoint, half-spread, no-arbitrage band, persistence, figures | `output/mid_*.csv`, `band.csv`, `persistence.csv`, `fig_mid_monthly.png`, `fig_half_spread.png`, `mid_minute.rds` |
-| `11_determinants.R` | Token-day panel regression of the absolute midpoint gap | `output/determinants*.{csv,txt,rds}` |
+| `10_basis_mid.R` | Intraday gap: side-specific vs midpoint, half-spread, no-arbitrage band, persistence, figures | `output/mid_*.csv`, `band.csv`, `persistence.csv`, `fig_mid_monthly.png`, `fig_half_spread.png`, `mid_minute.rds`, `last_minute.rds`, `band_minute.rds` |
+| `11_determinants.R` | Token-day panel regression of the absolute midpoint gap (+ post-hoc liquidity table) | `output/determinants*.{csv,txt,rds}`, `determinants_liquidity.csv` |
+| `12_band_followups.R` | Post-hoc: same-minute gap comparison, band direction split, run lengths in consecutive minutes, time-of-day heat maps, ETF vs crypto-linked groups | `output/same_minute.csv`, `band_direction.csv`, `band_runs.csv`, `heat_*.csv`, `group_*.csv`, `fig_heat_*.png`, `followups_log.txt` |
 | `20_weekend_panel.R` | One row per token per closed window, with checkpoint prices | `output/weekend_panel.rds` |
 | `21_btc_checkpoints.R` | Small network job (~125 calls), already done | `btc_data/btc_checkpoints.csv` |
 | `22_weekend_tracker.R` | Main weekend regressions and scatter figure | `output/weekend_*.csv`, `weekend_regressions.txt`, `fig_weekend_scatter.png` |

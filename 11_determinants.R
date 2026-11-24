@@ -16,7 +16,11 @@
 # Inputs:  output/mid_minute.rds (from 10_basis_mid.R), clean/kraken_trades.rds,
 #          clean/databento_1m_ny.rds
 # Outputs: output/determinants_panel.rds, output/determinants.txt,
-#          output/determinants_table.csv
+#          output/determinants_table.csv, output/determinants_liquidity.csv
+#
+# Post-hoc (prereg_log.md 2026-11-24): a separate liquidity table with dollar
+# volume, median trade size and Amihud illiquidity. The main table is unchanged.
+# Order-book depth is not available (no historical Kraken order book).
 
 library(data.table); library(sandwich); library(lmtest)
 
@@ -39,8 +43,16 @@ dg <- mid[, .(n_mid = .N,
 # ---- 2) Token activity: regular-session trades and opening share ----
 lt <- as.POSIXlt(as.POSIXct(tr$t, origin = "1970-01-01", tz = "UTC"), tz = "America/New_York")
 tr[, `:=`(date = as.Date(format(lt, "%Y-%m-%d")), mod = lt$hour * 60 + lt$min)]
-act <- tr[mod >= 570 & mod < 960, .(n_trades = .N, open_share = mean(mod < 600)),
+# Liquidity extras (post-hoc): dollar volume, median trade size in USD, and
+# Amihud illiquidity = |day's token return, %| per $1M traded. The return runs
+# from the first to the last regular-session trade, so it includes bid-ask bounce.
+setorder(tr, symbol, t)
+act <- tr[mod >= 570 & mod < 960, .(n_trades = .N, open_share = mean(mod < 600),
+                                    dollar_vol = sum(price * vol),
+                                    med_trade_usd = median(price * vol),
+                                    ret = 100 * log(price[.N] / price[1])),
           by = .(symbol, date)]
+act[, amihud := abs(ret) / (dollar_vol / 1e6)]
 
 # ---- 3) Stock realized volatility from 1-minute bar closes ----
 reg <- px[mod >= 570 & mod <= 959 & !(date %in% EARLY_CLOSE) & date <= LAST_DATE][order(symbol, ts)]
@@ -50,7 +62,8 @@ rv <- reg[, .(rv = sqrt(sum(r^2, na.rm = TRUE))), by = .(symbol, date)]
 # ---- 4) Assemble the panel ----
 d <- Reduce(function(a, b) merge(a, b, by = c("symbol", "date")), list(dg, act, rv))
 d <- d[n_mid >= MIN_MID]
-d[, `:=`(log_trades = log(n_trades),
+d[, `:=`(log_trades = log(n_trades), log_dvol = log(dollar_vol),
+         log_trade_usd = log(med_trade_usd),
          episode = as.integer(date >= EPISODE[1] & date <= EPISODE[2]),
          fdate = factor(date), fsym = factor(symbol))]
 saveRDS(d, "output/determinants_panel.rds")
@@ -84,14 +97,30 @@ foot <- rbindlist(lapply(fits, function(f) data.table(spec = f$label,
   N = f$n, days = f$days, R2 = round(f$r2, 3))))
 fwrite(tab, "output/determinants_table.csv")
 
+# ---- 6) Post-hoc liquidity specs (separate table) ----
+# (6) swap trade COUNT for dollar VOLUME; (7) add price impact and trade size.
+fits_liq <- list(
+  show(abs_gap ~ log_dvol + rv + half_spread + open_share + fsym + fdate, ~ date,
+       "(6) POST-HOC: log dollar volume"),
+  show(as.formula(paste("abs_gap ~", X, "+ log(amihud) + log_trade_usd + fsym + fdate")), ~ date,
+       "(7) POST-HOC: + Amihud, trade size", data = d[amihud > 0])
+)
+tab_liq <- rbindlist(lapply(fits_liq, function(f) data.table(
+  spec = f$label, term = c(rownames(f$ct), "N", "days"),
+  cell = c(sprintf("%.4f%s (%.4f)", f$ct[, 1], star(f$ct[, 4]), f$ct[, 2]), f$n, f$days))))
+fwrite(dcast(tab_liq, term ~ spec, value.var = "cell", fill = ""),
+       "output/determinants_liquidity.csv")
+
 sink("output/determinants.txt")
 cat("determinants.R run", format(Sys.time()), "\n")
 cat("Token-days:", nrow(d), "| tokens:", uniqueN(d$symbol), "| days:", uniqueN(d$date), "\n\n")
 cat("== Descriptives (token-day) ==\n")
 print(d[, lapply(.SD, function(x) round(quantile(x, c(.1, .5, .9)), 4)),
-        .SDcols = c("abs_gap", "n_trades", "rv", "half_spread", "open_share")])
+        .SDcols = c("abs_gap", "n_trades", "rv", "half_spread", "open_share",
+                    "dollar_vol", "med_trade_usd", "amihud")])
+cat("Token-days with zero return (dropped in spec 7):", d[amihud == 0, .N], "\n")
 cat("\nToken-days kept per token:\n"); print(d[, .N, by = symbol][order(-N)])
-for (f in fits) {
+for (f in c(fits, fits_liq)) {
   cat("\n==", f$label, "| N =", f$n, "| days =", f$days, "| R2 =", round(f$r2, 3), "==\n")
   print(round(f$ct, 4))
 }

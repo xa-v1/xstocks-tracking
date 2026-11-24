@@ -14,15 +14,17 @@
 #  4. Check that does not depend on minute matching: share of token trades
 #     priced inside the stock's high-low range in the same minute.
 #  5. No-arbitrage band: did an actual buy (sell) trade happen so far below
-#     (above) the stock that an arbitrageur could profit after fees and the
-#     cost of exiting? Several fee levels, since the fee is unverified.
+#     (above) the stock that the gap cleared estimated trading costs (fees and
+#     the cost of exiting)? This is not "profit": trade size, slippage, latency
+#     and stock-side costs are ignored. Several fee levels (fee unverified).
 #  6. Persistence: 15-minute medians of the midpoint gap, AR(1) per token,
 #     converted to a half-life in minutes.
 #
 # Inputs:  clean/kraken_trades.rds, clean/databento_1m_ny.rds
 # Outputs (all in output/): mid_summary.csv, half_spread_month.csv,
 #   mid_month.csv, inside_range.csv, band.csv, band_days.csv, persistence.csv,
-#   fig_mid_monthly.png, fig_half_spread.png, basis_mid_log.txt, mid_minute.rds
+#   fig_mid_monthly.png, fig_half_spread.png, basis_mid_log.txt, mid_minute.rds,
+#   last_minute.rds, band_minute.rds (the last two feed 12_band_followups.R)
 
 library(data.table); library(ggplot2)
 dir.create("output", showWarnings = FALSE)
@@ -86,6 +88,7 @@ saveRDS(mid, "output/mid_minute.rds")   # used by 11_determinants.R
 # Trade-price gap (last trade of any side) for comparison with the old measure
 last_any <- merge(tr[, .(p = price[.N]), by = .(symbol, bar)], stk, by = c("symbol", "bar"))
 last_any[, `:=`(g = 100 * log(p / stock), episode = date >= EPISODE[1] & date <= EPISODE[2])]
+saveRDS(last_any[, .(symbol, bar, g_last = g)], "output/last_minute.rds")  # same-minute check
 
 summ_mid <- mid[, .(minutes_mid = .N, med_mid = median(mid_gap),
                     med_abs_mid = median(abs(mid_gap)),
@@ -108,7 +111,8 @@ mm <- mid[, .(med_mid = median(mid_gap), minutes = .N), by = .(symbol, month)]
 fwrite(mm, "output/mid_month.csv")
 
 # ---- 4) No-arbitrage band using executable trade prices ----
-# Entry leg = an actual trade. Cost c = 2 * fee (in and out) + half-spread
+# Entry leg = an actual trade. A gap "clears estimated costs" (not "is
+# profitable") if it exceeds c = 2 * fee (in and out) + half-spread
 # (crossing the spread again to exit). Stock-side costs set to zero.
 # Two versions (prereg_log.md, 2026-11-23 later):
 #  out_close (pre-registered): trade vs the stock bar CLOSE.
@@ -124,11 +128,16 @@ band <- rbindlist(lapply(FEES, function(f) {
      , `:=`(out_close = (side == "b" & g < -c)    | (side == "s" & g > c),
             out_range = (side == "b" & g_lo < -c) | (side == "s" & g_hi > c))]
 }))
-band_min <- band[, .(out = any(out_range), out_close = any(out_close)),
+band_min <- band[, .(out = any(out_range), out_close = any(out_close),
+                     out_buy  = any(out_range & side == "b"),   # buy token, sell stock
+                     out_sell = any(out_range & side == "s")),  # sell token, buy stock
                  by = .(fee, symbol, episode, date, bar)]
+saveRDS(band_min, "output/band_minute.rds")   # direction split and run lengths
 band_tab <- band_min[, .(minutes = .N, share_minutes_out = mean(out),
                          share_minutes_out_close = mean(out_close)),
                      by = .(fee, symbol, episode)]
+# n_out = flagged minutes per DAY, not how long a gap lasts. Durations in
+# consecutive minutes are in 12_band_followups.R (band_runs.csv).
 band_day <- band_min[, .(any_out = any(out), n_out = sum(out)), by = .(fee, symbol, episode, date)][
                      , .(days = .N, share_days_any_out = mean(any_out),
                          med_out_minutes_when_any = as.numeric(median(n_out[any_out]))),
